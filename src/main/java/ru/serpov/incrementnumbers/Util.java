@@ -1,4 +1,4 @@
-package ru.serpov.incrementnumbers.util;
+package ru.serpov.incrementnumbers;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;

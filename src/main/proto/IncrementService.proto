@@ -10,7 +10,7 @@ message Request {
   int32 lastValue = 2;
 }
 enum ErrorCode {
-  FIRST_BIGGER_THAN_LAST = 0;
+  FIRST_EQUALS_OR_BIGGER_THAN_LAST = 0;
   INTERNAL_ERROR = 1;
 }
 message ErrorResponse {

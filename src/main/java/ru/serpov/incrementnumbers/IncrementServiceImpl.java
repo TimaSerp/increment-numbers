@@ -1,18 +1,14 @@
-package ru.serpov.incrementnumbers.server;
+package ru.serpov.incrementnumbers;
 
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
-import org.lognet.springboot.grpc.GRpcService;
-import ru.serpov.incrementnumbers.IncrementServiceGrpc;
 import ru.serpov.incrementnumbers.IncrementServiceOuterClass.*;
-import ru.serpov.incrementnumbers.util.Util;
 
 import static ru.serpov.incrementnumbers.IncrementServiceOuterClass.ErrorCode.FIRST_BIGGER_THAN_LAST;
 import static ru.serpov.incrementnumbers.IncrementServiceOuterClass.ErrorCode.INTERNAL_ERROR;
 
 @Slf4j
-@GRpcService
-public class ServerImpl extends IncrementServiceGrpc.IncrementServiceImplBase {
+public class IncrementServiceImpl extends IncrementServiceGrpc.IncrementServiceImplBase {
 
     @Override
     public void getStreamIncrement(Request request, StreamObserver<Response> responseObserver) {
@@ -20,9 +16,9 @@ public class ServerImpl extends IncrementServiceGrpc.IncrementServiceImplBase {
         int lastValue = request.getLastValue();
         log.info("GRPc call: receive getStreamIncrement(firstValue={}, lastValue={})", firstValue, lastValue);
         try {
-            if (firstValue > lastValue) {
+            if (firstValue >= lastValue) {
                 responseObserver.onNext(getErrorResponse(FIRST_BIGGER_THAN_LAST,
-                        String.format("%s is bigger than %s", firstValue, lastValue)));
+                        String.format("%s is equals or bigger than %s", firstValue, lastValue)));
             } else {
                 for (int i = 1; firstValue + i <= lastValue; i++) {
                     long start = System.currentTimeMillis();
