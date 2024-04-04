@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package ru.serpov.incrementnumbers;
+
+message SuccessResponse {
+  int32 newValue = 1;
+}
+message Request {
+  int32 firstValue = 1;
+  int32 lastValue = 2;
+}
+enum ErrorCode {
+  FIRST_EQUALS_OR_BIGGER_THAN_LAST = 0;
+  INTERNAL_ERROR = 1;
+}
+message ErrorResponse {
+  string desc = 1;
+  ErrorCode error_code = 2;
+}
+message Response {
+  oneof response {
+    SuccessResponse successResponse = 1;
+    ErrorResponse errorResponse = 2;
+  }
+}
+service IncrementService {
+  rpc GetStreamIncrement (Request) returns (stream Response) {}
+}
